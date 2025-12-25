@@ -9,8 +9,8 @@ def load_to_mysql(df, table_name):
     VALUES (%s, %s, %s, %s)
     """
 
-    for _, row in df.iterrows():
-        cursor.execute(insert_query, tuple(row))
+    data = [tuple(row) for _, row in df.iterrows()]
+    cursor.executemany(insert_query, data)
 
     connection.commit()
     cursor.close()
